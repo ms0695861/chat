@@ -20,26 +20,24 @@ def convert(lines):
         if "Tom" in line:
             person = 'Tom:'
             continue
-        new.append([person, line])
+        if person:
+            new.append(person + ' ' + line)
+
     return new
 
 
 #write file
-def write_file(filename2, new):
-    with open(filename2, 'w', encoding = 'utf-8') as f:
-        for n in new:
-            f.write(n[0] + n[1] + '\n')
+def write_file(filename, lines):
+    with open(filename, 'w', encoding = 'utf-8') as f:
+        for line in lines:
+            f.write(line + '\n')
 
-def main(filename1, filename2):
-    if os.path.isfile(filename1) and os.path.isfile(filename2): #check the file is exist or not
-        lines = read_file(filename1)
-        new = convert(lines)
-        write_file(filename2, new)
+def main(filename):
+    if os.path.isfile(filename): #check the file is exist or not
+        lines = read_file(filename)
+        lines = convert(lines)
+        write_file('output.txt', lines)
     else:
-        print("Can't not find file")
+        print("Can't not find input file!")
 
-filename1 = 'input.txt'
-filename2 = 'output.txt'
-
-main('input.txt', 'output.txt')
-
+main('input.txt')
